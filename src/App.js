@@ -5,29 +5,25 @@ import "./App.css";
 const App = ({slides}) => {
     const [currentSlide, setCurrentSlide] = useState(0);
 
-    const slidesCount = Object.keys(slides).length;
-
     useEffect(() => {
             document.onkeydown = (e) => {
                 switch (e.keyCode) {
                     case 37:
-                        setCurrentSlide((currentSlide + slidesCount - 1) % slidesCount)
+                        setCurrentSlide((currentSlide + slides.length - 1) % slides.length);
                         break;
                     case 39:
-                        setCurrentSlide((currentSlide + 1) % slidesCount);
+                        setCurrentSlide((currentSlide + 1) % slides.length);
                         break;
                 }
             };
             return () => {
-                document.onkeydown = undefined;
+                document.onkeydown = () => {
+                };
             };
         }
     );
 
-
     const CurrentSlideComponent = slides[currentSlide];
-
-
     return (<div className="content">
         <CurrentSlideComponent setCurrentSlide={setCurrentSlide}/>
     </div>);
