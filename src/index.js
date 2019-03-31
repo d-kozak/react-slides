@@ -1,12 +1,54 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
-import * as serviceWorker from './serviceWorker';
+import React, {useEffect, useState} from "react";
+import {render} from "react-dom";
 
-ReactDOM.render(<App />, document.getElementById('root'));
+import "./index.css";
 
-// If you want your app to work offline and load faster, you can change
-// unregister() to register() below. Note this comes with some pitfalls.
-// Learn more about service workers: https://bit.ly/CRA-PWA
-serviceWorker.unregister();
+const slides = {
+    0: () => <div>
+        <h1>Hello</h1>
+    </div>,
+    1: () => <div>
+        <h1>Slide 1</h1>
+    </div>,
+    2: () => <div>
+        <h1>Slide 2</h1>
+    </div>,
+    3: ({setCurrentSlide}) => <div>
+        <h1>The end</h1>
+        <button className="main-button" onClick={() => setCurrentSlide(0)}>Go back</button>
+    </div>
+
+};
+
+const slidesCount = Object.keys(slides).length;
+
+const App = () => {
+    const [currentSlide, setCurrentSlide] = useState(0);
+
+    useEffect(() => {
+            document.onkeydown = (e) => {
+                switch (e.keyCode) {
+                    case 37:
+                        setCurrentSlide((currentSlide + slidesCount - 1) % slidesCount)
+                        break;
+                    case 39:
+                        setCurrentSlide((currentSlide + 1) % slidesCount);
+                        break;
+                }
+            };
+            return () => {
+                document.onkeydown = undefined;
+            };
+        }
+    );
+
+
+    const CurrentSlideComponent = slides[currentSlide];
+
+
+    return (<div className="content">
+        <CurrentSlideComponent setCurrentSlide={setCurrentSlide}/>
+    </div>);
+};
+
+render(<App/>, document.getElementById('root'));
