@@ -1,0 +1,16 @@
+.content {
+    font-size: calc(10px + 2vmin);
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.main-button {
+    border-radius: 10px;
+    padding: 5px;
+    margin: 0;
+    background-color: #ce5712;
+    color: #fff;
+    font-size: calc(10px + 2vmin);
+}
